@@ -7,6 +7,6 @@ public class AppDbContext : DbContext
     {
     }
 
-    // Define la tabla 'Tareas' en la base de datos
+    
     public DbSet<Tarea> Tareas { get; set; }
 }

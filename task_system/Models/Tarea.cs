@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class Tarea
 {
+    [Key] 
     public int Id { get; set; }
 
     [Required(ErrorMessage = "El título es obligatorio")]
