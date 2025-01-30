@@ -45,10 +45,19 @@ public class TareasController : Controller
             var tareaExistente = _tareaService.ObtenerTareaPorId(tarea.Id);
             if (tareaExistente != null)
             {
-                tareaExistente.Titulo = tarea.Titulo;
-                tareaExistente.Descripcion = tarea.Descripcion;
-                tareaExistente.Responsable = tarea.Responsable;
+               
+                if (!string.IsNullOrWhiteSpace(tarea.Titulo))
+                    tareaExistente.Titulo = tarea.Titulo;
+
+                if (!string.IsNullOrWhiteSpace(tarea.Descripcion))
+                    tareaExistente.Descripcion = tarea.Descripcion;
+
+                if (!string.IsNullOrWhiteSpace(tarea.Responsable))
+                    tareaExistente.Responsable = tarea.Responsable;
+
+                
                 tareaExistente.Estado = tarea.Estado;
+
                 _tareaService.ActualizarTarea(tareaExistente);
                 return Json(new { success = true });
             }
@@ -60,6 +69,7 @@ public class TareasController : Controller
             return Json(new { success = false, message = "Error al editar la tarea" });
         }
     }
+
 
 
 }
