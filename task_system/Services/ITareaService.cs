@@ -5,7 +5,8 @@
         List<Tarea> ObtenerTareas();
         void AgregarTarea(Tarea tarea);
         Tarea ObtenerTareaPorId(int id);
-        void EliminarTarea(int id);
+
+        void ActualizarTarea(Tarea tarea);
     }
 }
 

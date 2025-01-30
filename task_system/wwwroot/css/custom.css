@@ -1,0 +1,76 @@
+﻿:root {
+    --bs-primary: #1C1C46; /* Azul oscuro */
+    --bs-secondary: #E31837; /* Rojo */
+    --bs-light: #FFFFFF; /* Blanco */
+}
+
+body {
+    background: linear-gradient(#00035b, #cc0022);
+    color: var(--bs-light);
+}
+
+.navbar {
+    
+    background-color: #e0dfdb;
+}
+
+}
+
+.navbar-brand {
+    color: var(--bs-light);
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+
+}
+
+    .btn-primary:hover {
+        background-color: #16163A;
+        border-color: #16163A;
+    }
+
+
+.titulo {
+    color: #FFFFFF; 
+    font-weight: bold;
+}
+
+.container1 {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+
+/* Diseño de la tabla */
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Color de los títulos de sección */
+.text-primary {
+    color: #2D6CDF; 
+}
+
+.table thead {
+    background-color: #F0F0F0;
+}
+
+/* Estilo de los estados */
+.badge {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+/* Ajuste de las celdas */
+.table td {
+    vertical-align: middle;
+}

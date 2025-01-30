@@ -19,7 +19,13 @@ public class TareasController : Controller
     [HttpPost]
     public IActionResult CrearTarea([FromBody] Tarea tarea)
     {
-        Console.WriteLine($"Recibiendo datos: Titulo={tarea.Titulo}, Descripcion={tarea.Descripcion}");
+
+        if (string.IsNullOrWhiteSpace(tarea.Responsable))
+        {
+            tarea.Responsable = "Sin asignar";
+        }
+
+        Console.WriteLine($"Recibiendo datos: Titulo={tarea.Titulo}, Descripcion={tarea.Descripcion}, Responsable: {tarea.Responsable}");
 
         if (ModelState.IsValid)
         {
@@ -31,24 +37,31 @@ public class TareasController : Controller
         return Json(new { success = false, message = "Datos inválidos" });
     }
 
-   [HttpPost]
-    public IActionResult EliminarTarea(int id)
+    [HttpPost]
+    public IActionResult EditarTarea(Tarea tarea)
     {
-        Console.WriteLine($"Id recibido en el controlador: {id}");
-
-        var tarea = _tareaService.ObtenerTareaPorId(id);
-        if (tarea != null)
+        try
         {
-            Console.WriteLine($"Tarea encontrada: {tarea.Id}");
-            _tareaService.EliminarTarea(id);
-            return Json(new { success = true });
+            var tareaExistente = _tareaService.ObtenerTareaPorId(tarea.Id);
+            if (tareaExistente != null)
+            {
+                tareaExistente.Titulo = tarea.Titulo;
+                tareaExistente.Descripcion = tarea.Descripcion;
+                tareaExistente.Responsable = tarea.Responsable;
+                tareaExistente.Estado = tarea.Estado;
+                _tareaService.ActualizarTarea(tareaExistente);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false, message = "Tarea no encontrada" });
         }
-        
-        Console.WriteLine("Tarea no encontrada en la base de datos.");
-        return Json(new { success = false, message = "Tarea no encontrada" });
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al actualizar la tarea: {ex.Message}");
+            return Json(new { success = false, message = "Error al editar la tarea" });
+        }
     }
 
 
-
-
 }
+
+

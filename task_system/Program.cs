@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     ));
 builder.Services.AddScoped<ITareaService, TareaService>();
 
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

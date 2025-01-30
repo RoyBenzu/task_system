@@ -2,7 +2,8 @@
 $("#btnGuardar").on("click", function () {
     var tarea = {
         Titulo: $("#titulo").val(),
-        Descripcion: $("#descripcion").val()
+        Descripcion: $("#descripcion").val(),
+        Responsable: $("#responsable").val()
     };
 
     $.ajax({
@@ -25,30 +26,56 @@ $("#btnGuardar").on("click", function () {
     });
 });
 
-$(document).on("click", ".btn-eliminar", function () {
-    var Id = $(this).data("id"); // Obtener el Id de la tarea desde el botón
 
-    console.log("Id enviado para eliminar:", Id); // Verifica qué Id se está enviando
+$(document).on("click", ".btn-editar", function () {
+    // Obtener los datos de la tarea
+    var id = $(this).data("id");
+    var titulo = $(this).closest("tr").find(".titulo").text();
+    var descripcion = $(this).closest("tr").find(".descripcion").text();
+    var responsable = $(this).closest("tr").find(".responsable").text();
+    var estado = $(this).closest("tr").find(".estado").text().trim();
 
-    if (confirm("¿Estás seguro de que deseas eliminar esta tarea?")) {
-        $.ajax({
-            url: "/Tareas/EliminarTarea",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({ Id: Id }),
-            success: function (response) {
-                if (response.success) {
-                    alert("Tarea eliminada exitosamente.");
-                    location.reload();
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function (error) {
-                alert("Ocurrió un error al eliminar la tarea.");
-                console.log(error);
-            }
-        });
+    // Asignar los datos al modal
+    $("#editarId").val(id);
+    $("#editarTitulo").val(titulo);
+    $("#editarDescripcion").val(descripcion);
+    $("#editarResponsable").val(responsable);
+    $("#editarEstado").val(estado);
+
+    // Mostrar el modal
+    $("#modalEditarTarea").modal("show");
+});
+
+$("#btnActualizar").on("click", function () {
+    var tarea = {
+        Id: $("#editarId").val(),
+        Titulo: $("#editarTitulo").val(),
+        Descripcion: $("#editarDescripcion").val(),
+        Responsable: $("#editarResponsable").val(),
+        Estado: $("#editarEstado").val()
+    };
+
+    $.post("/Tareas/EditarTarea", tarea, function (response) {
+        if (response.success) {
+            location.reload();
+        } else {
+            alert(response.message);
+        }
+    });
+});
+
+// Cambiar color según estado seleccionado
+$("#editarEstado").on("change", function () {
+    var estado = $(this).val();
+    var estadoBadge = $("#estadoBadge");
+
+    if (estado === "Finalizado") {
+        estadoBadge.removeClass("badge-warning").addClass("badge-success").text("Finalizado");
+    } else {
+        estadoBadge.removeClass("badge-success").addClass("badge-warning").text("En proceso");
     }
 });
+
+
+
 

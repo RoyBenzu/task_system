@@ -14,28 +14,27 @@ public class TareaService : ITareaService
 
     public void AgregarTarea(Tarea tarea)
     {
-        Console.WriteLine($"Guardando tarea: {tarea.Titulo}, {tarea.Descripcion}");
+        Console.WriteLine($"Guardando tarea: {tarea.Titulo}, {tarea.Descripcion}, {tarea.Responsable}");
         _dbContext.Tareas.Add(tarea);
         _dbContext.SaveChanges(); 
     }
 
     public Tarea ObtenerTareaPorId(int id)
     {
-        return _dbContext.Tareas.FirstOrDefault(t => t.Id == id);
+        var tarea = _dbContext.Tareas.FirstOrDefault(t => t.Id == id);
+        Console.WriteLine(tarea != null ? $"Tarea encontrada: {tarea.Titulo}" : $"No se encontró la tarea con Id={id}");
+        return tarea;
     }
 
-    public void EliminarTarea(int id)
+    public void ActualizarTarea(Tarea tarea)
     {
-        var tarea = _dbContext.Tareas.FirstOrDefault(t => t.Id == id);
-        if (tarea != null)
+        var tareaExistente = _dbContext.Tareas.Find(tarea.Id);
+        if (tareaExistente != null)
         {
-            Console.WriteLine($"Eliminando tarea con Id={id}: {tarea.Titulo}");
-            _dbContext.Tareas.Remove(tarea);
+            tareaExistente.Titulo = tarea.Titulo;
+            tareaExistente.Descripcion = tarea.Descripcion;
+            tareaExistente.Responsable = tarea.Responsable;
             _dbContext.SaveChanges();
-        }
-        else
-        {
-            Console.WriteLine($"No se encontró la tarea con Id={id} para eliminar.");
         }
     }
 

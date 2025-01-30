@@ -13,4 +13,10 @@ public class Tarea
     public string Descripcion { get; set; }
 
     public DateTime FechaCreacion { get; set; } = DateTime.Now;
+
+    public string Estado { get; set; } = "En proceso";
+
+    public string Responsable { get; set; } = "Sin asignar";
+
+
 }
