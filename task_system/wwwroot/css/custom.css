@@ -1,7 +1,7 @@
 ﻿:root {
-    --bs-primary: #1C1C46; /* Azul oscuro */
-    --bs-secondary: #E31837; /* Rojo */
-    --bs-light: #FFFFFF; /* Blanco */
+    --bs-primary: #1C1C46; 
+    --bs-secondary: #E31837; 
+    --bs-light: #FFFFFF; 
 }
 
 body {
